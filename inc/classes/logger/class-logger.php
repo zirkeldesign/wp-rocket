@@ -35,7 +35,7 @@ class Logger {
 	 * @since  3.1.4
 	 * @author Grégory Viguier
 	 */
-	const LOG_FILE_NAME = 'wp-rocket-debug.log';
+	const LOG_FILE_NAME = 'wp-rocket-debug';
 
 	/**
 	 * A unique ID given to the current thread.
@@ -61,10 +61,11 @@ class Logger {
 	 *
 	 * @param  string $message The log message.
 	 * @param  array  $context The log context.
+	 * @param  string $section The log section added to log name.
 	 * @return bool|null       Whether the record has been processed.
 	 */
-	public static function debug( $message, array $context = array() ) {
-		return static::debug_enabled() ? static::get_logger()->debug( $message, $context ) : null;
+	public static function debug( $message, array $context = array(), $section = '' ) {
+		return static::debug_enabled() ? static::get_logger($section)->debug( $message, $context, $section ) : null;
 	}
 
 	/**
@@ -76,10 +77,11 @@ class Logger {
 	 *
 	 * @param  string $message The log message.
 	 * @param  array  $context The log context.
+	 * @param  string $section The log section added to log name.
 	 * @return bool|null       Whether the record has been processed.
 	 */
-	public static function info( $message, array $context = array() ) {
-		return static::debug_enabled() ? static::get_logger()->info( $message, $context ) : null;
+	public static function info( $message, array $context = array(), $section = '' ) {
+		return static::debug_enabled() ? static::get_logger($section)->info( $message, $context, $section ) : null;
 	}
 
 	/**
@@ -91,10 +93,11 @@ class Logger {
 	 *
 	 * @param  string $message The log message.
 	 * @param  array  $context The log context.
+	 * @param  string $section The log section added to log name.
 	 * @return bool|null       Whether the record has been processed.
 	 */
-	public static function notice( $message, array $context = array() ) {
-		return static::debug_enabled() ? static::get_logger()->notice( $message, $context ) : null;
+	public static function notice( $message, array $context = array(), $section = '' ) {
+		return static::debug_enabled() ? static::get_logger($section)->notice( $message, $context,$section ) : null;
 	}
 
 	/**
@@ -106,10 +109,11 @@ class Logger {
 	 *
 	 * @param  string $message The log message.
 	 * @param  array  $context The log context.
+	 * @param  string $section The log section added to log name.
 	 * @return bool|null       Whether the record has been processed.
 	 */
-	public static function warning( $message, array $context = array() ) {
-		return static::debug_enabled() ? static::get_logger()->warning( $message, $context ) : null;
+	public static function warning( $message, array $context = array(), $section = '' ) {
+		return static::debug_enabled() ? static::get_logger($section)->warning( $message, $context, $section ) : null;
 	}
 
 	/**
@@ -121,10 +125,11 @@ class Logger {
 	 *
 	 * @param  string $message The log message.
 	 * @param  array  $context The log context.
+	 * @param  string $section The log section added to log name.
 	 * @return bool|null       Whether the record has been processed.
 	 */
-	public static function error( $message, array $context = array() ) {
-		return static::debug_enabled() ? static::get_logger()->error( $message, $context ) : null;
+	public static function error( $message, array $context = array(), $section = '' ) {
+		return static::debug_enabled() ? static::get_logger($section)->error( $message, $context, $section ) : null;
 	}
 
 	/**
@@ -136,10 +141,11 @@ class Logger {
 	 *
 	 * @param  string $message The log message.
 	 * @param  array  $context The log context.
+	 * @param  string $section The log section added to log name.
 	 * @return bool|null       Whether the record has been processed.
 	 */
-	public static function critical( $message, array $context = array() ) {
-		return static::debug_enabled() ? static::get_logger()->critical( $message, $context ) : null;
+	public static function critical( $message, array $context = array(), $section = '' ) {
+		return static::debug_enabled() ? static::get_logger($section)->critical( $message, $context, $section ) : null;
 	}
 
 	/**
@@ -151,10 +157,11 @@ class Logger {
 	 *
 	 * @param  string $message The log message.
 	 * @param  array  $context The log context.
+	 * @param  string $section The log section added to log name.
 	 * @return bool|null       Whether the record has been processed.
 	 */
-	public static function alert( $message, array $context = array() ) {
-		return static::debug_enabled() ? static::get_logger()->alert( $message, $context ) : null;
+	public static function alert( $message, array $context = array(), $section = '' ) {
+		return static::debug_enabled() ? static::get_logger($section)->alert( $message, $context, $section ) : null;
 	}
 
 	/**
@@ -166,10 +173,11 @@ class Logger {
 	 *
 	 * @param  string $message The log message.
 	 * @param  array  $context The log context.
+	 * @param  string $section The log section added to log name.
 	 * @return bool|null       Whether the record has been processed.
 	 */
-	public static function emergency( $message, array $context = array() ) {
-		return static::debug_enabled() ? static::get_logger()->emergency( $message, $context ) : null;
+	public static function emergency( $message, array $context = array(), $section = '' ) {
+		return static::debug_enabled() ? static::get_logger($section)->emergency( $message, $context, $section ) : null;
 	}
 
 	/**
@@ -179,10 +187,11 @@ class Logger {
 	 * @access public
 	 * @author Grégory Viguier
 	 *
+	 * @param  string $section The log section added to log name.
 	 * @return Logger A Logger instance.
 	 */
-	public static function get_logger() {
-		$logger_name = static::LOGGER_NAME;
+	public static function get_logger($section = '') {
+		$logger_name = static::LOGGER_NAME . ($section != '' ? '_' . $section : '');
 		$log_level   = Monologger::DEBUG;
 
 		if ( Registry::hasLogger( $logger_name ) ) {
@@ -193,7 +202,7 @@ class Logger {
 		 * File handler.
 		 * HTML formatter is used.
 		 */
-		$handler   = new StreamHandler( static::get_log_file_path(), $log_level );
+		$handler   = new StreamHandler( static::get_log_file_path($section), $log_level );
 		$formatter = new HtmlFormatter();
 
 		$handler->setFormatter( $formatter );
@@ -225,15 +234,16 @@ class Logger {
 	 * @access public
 	 * @author Grégory Viguier
 	 *
+	 * @param  string $section The log section added to log name.
 	 * @return string
 	 */
-	public static function get_log_file_path() {
+	public static function get_log_file_path($section = '') {
 		if ( defined( 'WP_ROCKET_DEBUG_LOG_FILE' ) && WP_ROCKET_DEBUG_LOG_FILE && is_string( WP_ROCKET_DEBUG_LOG_FILE ) ) {
 			// Make sure the file uses a ".log" extension.
 			return preg_replace( '/\.[^.]*$/', '', WP_ROCKET_DEBUG_LOG_FILE ) . '.log';
 		}
 
-		return WP_CONTENT_DIR . '/wp-rocket-config/' . static::LOG_FILE_NAME;
+		return WP_CONTENT_DIR . '/wp-rocket-config/' . static::LOG_FILE_NAME . ($section !== '' ? '-' . $section : '') . '.log';
 	}
 
 	/**
@@ -243,11 +253,12 @@ class Logger {
 	 * @access public
 	 * @author Grégory Viguier
 	 *
+	 * @param  string $section The log section added to log name.
 	 * @return string|object The file contents on success. A WP_Error object on failure.
 	 */
-	public static function get_log_file_contents() {
+	public static function get_log_file_contents($section = '') {
 		$filesystem = \rocket_direct_filesystem();
-		$file_path  = static::get_log_file_path();
+		$file_path  = static::get_log_file_path($section);
 
 		if ( ! $filesystem->exists( $file_path ) ) {
 			return new \WP_Error( 'no_file', __( 'The log file does not exist.', 'rocket' ) );
@@ -269,17 +280,18 @@ class Logger {
 	 * @access public
 	 * @author Grégory Viguier
 	 *
+	 * @param  string $section The log section added to log name.
 	 * @return array|object An array of statistics on success. A WP_Error object on failure.
 	 */
-	public static function get_log_file_stats() {
-		$formatter = static::get_stream_formatter();
+	public static function get_log_file_stats($section = '') {
+		$formatter = static::get_stream_formatter($section);
 
 		if ( ! $formatter ) {
 			return new \WP_Error( 'no_stream_formatter', __( 'The logs are not saved into a file.', 'rocket' ) );
 		}
 
 		$filesystem = \rocket_direct_filesystem();
-		$file_path  = static::get_log_file_path();
+		$file_path  = static::get_log_file_path($section);
 
 		if ( ! $filesystem->exists( $file_path ) ) {
 			return new \WP_Error( 'no_file', __( 'The log file does not exist.', 'rocket' ) );
@@ -342,11 +354,12 @@ class Logger {
 	 * @access public
 	 * @author Grégory Viguier
 	 *
+	 * @param  string $section The log section added to log name.
 	 * @return bool True on success. False on failure.
 	 */
-	public static function delete_log_file() {
+	public static function delete_log_file($section = '') {
 		$filesystem = \rocket_direct_filesystem();
-		$file_path  = static::get_log_file_path();
+		$file_path  = static::get_log_file_path($section);
 
 		if ( ! $filesystem->exists( $file_path ) ) {
 			return true;
@@ -365,10 +378,11 @@ class Logger {
 	 * @access public
 	 * @author Grégory Viguier
 	 *
+	 * @param  string $section The log section added to log name.
 	 * @return object|bool The formatter object on success. False on failure.
 	 */
-	public static function get_stream_handler() {
-		$handlers = static::get_logger()->getHandlers();
+	public static function get_stream_handler($section = '') {
+		$handlers = static::get_logger($section)->getHandlers();
 
 		if ( ! $handlers ) {
 			return false;
@@ -395,10 +409,11 @@ class Logger {
 	 * @access public
 	 * @author Grégory Viguier
 	 *
+	 * @param  string $section The log section added to log name.
 	 * @return object|bool The formatter object on success. False on failure.
 	 */
-	public static function get_stream_formatter() {
-		$handler = static::get_stream_handler();
+	public static function get_stream_formatter($section = '') {
+		$handler = static::get_stream_handler($section);
 
 		if ( empty( $handler ) ) {
 			return false;
