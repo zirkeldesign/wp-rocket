@@ -65,7 +65,7 @@ class Logger {
 	 * @return bool|null       Whether the record has been processed.
 	 */
 	public static function debug( $message, array $context = array(), $section = '' ) {
-		return static::debug_enabled() ? static::get_logger($section)->debug( $message, $context, $section ) : null;
+		return static::debug_enabled() ? static::get_logger($section)->debug( $message, $context ) : null;
 	}
 
 	/**
@@ -81,7 +81,7 @@ class Logger {
 	 * @return bool|null       Whether the record has been processed.
 	 */
 	public static function info( $message, array $context = array(), $section = '' ) {
-		return static::debug_enabled() ? static::get_logger($section)->info( $message, $context, $section ) : null;
+		return static::debug_enabled() ? static::get_logger($section)->info( $message, $context ) : null;
 	}
 
 	/**
@@ -97,7 +97,7 @@ class Logger {
 	 * @return bool|null       Whether the record has been processed.
 	 */
 	public static function notice( $message, array $context = array(), $section = '' ) {
-		return static::debug_enabled() ? static::get_logger($section)->notice( $message, $context,$section ) : null;
+		return static::debug_enabled() ? static::get_logger($section)->notice( $message, $context ) : null;
 	}
 
 	/**
@@ -113,7 +113,7 @@ class Logger {
 	 * @return bool|null       Whether the record has been processed.
 	 */
 	public static function warning( $message, array $context = array(), $section = '' ) {
-		return static::debug_enabled() ? static::get_logger($section)->warning( $message, $context, $section ) : null;
+		return static::debug_enabled() ? static::get_logger($section)->warning( $message, $context ) : null;
 	}
 
 	/**
@@ -129,7 +129,7 @@ class Logger {
 	 * @return bool|null       Whether the record has been processed.
 	 */
 	public static function error( $message, array $context = array(), $section = '' ) {
-		return static::debug_enabled() ? static::get_logger($section)->error( $message, $context, $section ) : null;
+		return static::debug_enabled() ? static::get_logger($section)->error( $message, $context ) : null;
 	}
 
 	/**
@@ -145,7 +145,7 @@ class Logger {
 	 * @return bool|null       Whether the record has been processed.
 	 */
 	public static function critical( $message, array $context = array(), $section = '' ) {
-		return static::debug_enabled() ? static::get_logger($section)->critical( $message, $context, $section ) : null;
+		return static::debug_enabled() ? static::get_logger($section)->critical( $message, $context ) : null;
 	}
 
 	/**
@@ -161,7 +161,7 @@ class Logger {
 	 * @return bool|null       Whether the record has been processed.
 	 */
 	public static function alert( $message, array $context = array(), $section = '' ) {
-		return static::debug_enabled() ? static::get_logger($section)->alert( $message, $context, $section ) : null;
+		return static::debug_enabled() ? static::get_logger($section)->alert( $message, $context ) : null;
 	}
 
 	/**
@@ -177,7 +177,7 @@ class Logger {
 	 * @return bool|null       Whether the record has been processed.
 	 */
 	public static function emergency( $message, array $context = array(), $section = '' ) {
-		return static::debug_enabled() ? static::get_logger($section)->emergency( $message, $context, $section ) : null;
+		return static::debug_enabled() ? static::get_logger($section)->emergency( $message, $context ) : null;
 	}
 
 	/**
