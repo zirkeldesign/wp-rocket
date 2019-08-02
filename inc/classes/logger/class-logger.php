@@ -389,9 +389,11 @@ class Logger {
 	public static function delete_log_files() {
 		$sections = static::get_log_files_sections();
 
-		$exists = true;
-		foreach ( $sections as $section ) {
-			$exists &= static::delete_log_file($section);
+        if ( ! is_wp_error($sections) ) {
+            $exists = true;
+            foreach ($sections as $section) {
+                $exists &= static::delete_log_file($section);
+            }
 		}
 
         $exists &= static::delete_log_file();
