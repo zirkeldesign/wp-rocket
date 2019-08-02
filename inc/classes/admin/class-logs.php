@@ -120,7 +120,7 @@ class Logs implements Subscriber_Interface {
 			$this->redirect();
 		}
 
-		if ( ! Logger::delete_log_file() ) {
+		if ( ! Logger::delete_log_files() ) {
 			add_settings_error( 'general', 'debug_file_not_deleted', __( 'The debug file could not be deleted.', 'rocket' ), 'error' );
 			set_transient( 'settings_errors', get_settings_errors(), 30 );
 

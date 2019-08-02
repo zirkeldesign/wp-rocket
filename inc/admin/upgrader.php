@@ -375,7 +375,7 @@ function rocket_new_upgrade( $wp_rocket_version, $actual_version ) {
 			}
 
 			if ( ! $success ) {
-				Logger::delete_log_file();
+				Logger::delete_log_files();
 			}
 		}
 	}

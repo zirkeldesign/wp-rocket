@@ -222,6 +222,36 @@ class Logger {
 		return $logger;
 	}
 
+	/**
+	 * Get all log sections based on log files
+	 *
+	 * @since  3.1.4
+	 * @access public
+	 * @author Soponar Cristina
+	 *
+	 * @return string|object An (empty) array with sections on success. A WP_Error object on failure.
+	 */
+	public static function get_log_files_sections() {
+		$filesystem = \rocket_direct_filesystem();
+		$folder_path = WP_CONTENT_DIR . '/wp-rocket-config/';
+
+		if ( ! rocket_direct_filesystem()->is_dir( $folder_path ) ) {
+			return new \WP_Error( 'folder_not_available', __( 'The log folder is not available.', 'rocket' ) );
+		}
+
+		$files    = $filesystem->dirlist( $folder_path );
+		$sections = array();
+
+		foreach ($files as $file_name => $file) {
+			if ( strpos($file_name, static::LOG_FILE_NAME) === 0) {
+				if (preg_match( '/wp-rocket-debug-(\w+)\.(?:log|html)/', $file_name, $section)) {
+					$sections[] = $section[1];
+				}
+			}
+		}
+
+		return $sections;
+	}
 
 	/** ----------------------------------------------------------------------------------------- */
 	/** LOG FILE ================================================================================ */
@@ -348,6 +378,28 @@ class Logger {
 	}
 
 	/**
+	 * Delete all log files.
+	 *
+	 * @since  3.1.4
+	 * @access public
+	 * @author Soponar Cristina
+	 *
+	 * @return bool True on success. False on failure.
+	 */
+	public static function delete_log_files() {
+		$sections = static::get_log_files_sections();
+
+		$exists = true;
+		foreach ( $sections as $section ) {
+			$exists &= static::delete_log_file($section);
+		}
+
+        $exists &= static::delete_log_file();
+
+		return $exists;
+	}
+
+	/**
 	 * Delete the log file.
 	 *
 	 * @since  3.1.4
@@ -364,8 +416,8 @@ class Logger {
 		if ( ! $filesystem->exists( $file_path ) ) {
 			return true;
 		}
-
-		$filesystem->put_contents( $file_path, '' );
+		$chmod = rocket_get_filesystem_perms( 'file' );
+		$filesystem->put_contents( $file_path, '', $chmod );
 		$filesystem->delete( $file_path, false, 'f' );
 
 		return ! $filesystem->exists( $file_path );
