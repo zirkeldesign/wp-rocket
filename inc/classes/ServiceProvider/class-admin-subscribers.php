@@ -26,6 +26,7 @@ class Admin_Subscribers extends AbstractServiceProvider {
 		'deactivation_intent_subscriber',
 		'beacon_subscriber',
 		'hummingbird_subscriber',
+		'logs_subscriber',
 	];
 
 	/**
@@ -48,6 +49,9 @@ class Admin_Subscribers extends AbstractServiceProvider {
 		$this->getContainer()->share( 'beacon_subscriber', 'WP_Rocket\Subscriber\Admin\Settings\Beacon_Subscriber' )
 			->withArgument( $this->getContainer()->get( 'beacon' ) );
 		$this->getContainer()->share( 'hummingbird_subscriber', 'WP_Rocket\Subscriber\Third_Party\Plugins\Optimization\Hummingbird_Subscriber' )
+			->withArgument( $this->getContainer()->get( 'options' ) );
+
+		$this->getContainer()->share( 'logs_subscriber', 'WP_Rocket\Admin\Logs' )
 			->withArgument( $this->getContainer()->get( 'options' ) );
 	}
 }

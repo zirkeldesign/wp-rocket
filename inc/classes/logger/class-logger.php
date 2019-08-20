@@ -244,7 +244,7 @@ class Logger {
 
 		foreach ($files as $file_name => $file) {
 			if ( strpos($file_name, static::LOG_FILE_NAME) === 0) {
-				if (preg_match( '/wp-rocket-debug-(\w+)\.(?:log|html)/', $file_name, $section)) {
+				if (preg_match( '/wp-rocket-debug-([a-zA-Z0-9-_]+)\.(?:log|html)/', $file_name, $section)) {
 					$sections[] = $section[1];
 				}
 			}
@@ -344,10 +344,8 @@ class Logger {
 		$entries  = $entries ? number_format_i18n( count( $entries ) ) : '0';
 		$bytes    = $filesystem->size( $file_path );
 		$decimals = $bytes > pow( 1024, 3 ) ? 1 : 0;
-		$bytes    = @size_format( $bytes, $decimals );
-		$bytes    = str_replace( ' ', ' ', $bytes ); // Non-breaking space character.
 
-		return compact( 'entries', 'bytes' );
+		return array($entries, $bytes);
 	}
 
 	/**
@@ -392,7 +390,7 @@ class Logger {
         if ( ! is_wp_error($sections) ) {
             $exists = true;
             foreach ($sections as $section) {
-                $exists &= static::delete_log_file($section);
+				$exists &= static::delete_log_file($section);
             }
 		}
 
@@ -422,7 +420,7 @@ class Logger {
 		$filesystem->put_contents( $file_path, '', $chmod );
 		$filesystem->delete( $file_path, false, 'f' );
 
-		return ! $filesystem->exists( $file_path );
+		return ! $filesystem->exists( $file_path ) || ($filesystem->size( $file_path ) === 0);
 	}
 
 	/**

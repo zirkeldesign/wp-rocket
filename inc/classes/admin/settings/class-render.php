@@ -489,6 +489,24 @@ class Render extends Abstract_render {
 	}
 
 	/**
+	 * Displays logs form template.
+	 *
+	 * @since 3.3.4
+	 * @author Soponar Cristima
+	 *
+	 * @return void
+	 */
+	public function render_logs_form() {
+		$args = array();
+
+		$args['action']      = 'rocket_download_debug_file';
+		$args['nonce_name']      = 'download_debug_file';
+		$args['submit_text'] = __( 'Download Log File', 'rocket' );
+
+		echo $this->generate( 'fields/download-logs', $args );
+	}
+
+	/**
 	 * Displays the button template.
 	 *
 	 * @since 3.0

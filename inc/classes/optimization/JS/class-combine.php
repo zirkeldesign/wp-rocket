@@ -91,44 +91,44 @@ class Combine extends Abstract_JS_Optimization {
 	 * @return string
 	 */
 	public function optimize( $html ) {
-		Logger::info( 'JS COMBINE PROCESS STARTED.', [ 'js combine process' ] );
+		Logger::info( 'JS COMBINE PROCESS STARTED.', [ 'js combine process' ] , 'file-optimize' );
 
 		$html_nocomments = $this->hide_comments( $html );
 		$scripts         = $this->find( '<script.*<\/script>', $html_nocomments );
 
 		if ( ! $scripts ) {
-			Logger::debug( 'No `<script>` tags found.', [ 'js combine process' ] );
+			Logger::debug( 'No `<script>` tags found.', [ 'js combine process' ] , 'file-optimize' );
 			return $html;
 		}
 
 		Logger::debug( 'Found ' . count( $scripts ) . ' `<script>` tag(s).', [
 			'js combine process',
 			'tags' => $scripts,
-		] );
+		] , 'file-optimize' );
 
 		$combine_scripts = $this->parse( $scripts );
 
 		if ( empty( $combine_scripts ) ) {
-			Logger::debug( 'No `<script>` tags to optimize.', [ 'js combine process' ] );
+			Logger::debug( 'No `<script>` tags to optimize.', [ 'js combine process' ] , 'file-optimize' );
 			return $html;
 		}
 
 		Logger::debug( count( $combine_scripts ) . ' `<script>` tag(s) remaining.', [
 			'js combine process',
 			'tags' => $combine_scripts,
-		] );
+		] , 'file-optimize' );
 
 		$content = $this->get_content();
 
 		if ( empty( $content ) ) {
-			Logger::debug( 'No JS content.', [ 'js combine process' ] );
+			Logger::debug( 'No JS content.', [ 'js combine process' ] , 'file-optimize' );
 			return $html;
 		}
 
 		$minify_url = $this->combine( $content );
 
 		if ( ! $minify_url ) {
-			Logger::error( 'JS combine process failed.', [ 'js combine process' ] );
+			Logger::error( 'JS combine process failed.', [ 'js combine process' ] , 'file-optimize' );
 			return $html;
 		}
 
@@ -150,7 +150,7 @@ class Combine extends Abstract_JS_Optimization {
 		Logger::info( 'Combined JS file successfully added.', [
 			'js combine process',
 			'url' => $minify_url,
-		] );
+		] , 'file-optimize' );
 
 		return $html;
 	}
@@ -175,7 +175,7 @@ class Combine extends Abstract_JS_Optimization {
 							Logger::debug( 'Script is external.', [
 								'js combine process',
 								'tag' => $matches[0],
-							] );
+							] , 'file-optimize' );
 							return;
 						}
 					}
@@ -192,7 +192,7 @@ class Combine extends Abstract_JS_Optimization {
 					Logger::debug( 'Script is excluded.', [
 						'js combine process',
 						'tag' => $matches[0],
-					] );
+					] , 'file-optimize' );
 					return;
 				}
 
@@ -200,7 +200,7 @@ class Combine extends Abstract_JS_Optimization {
 					Logger::debug( 'Script is jQuery.', [
 						'js combine process',
 						'tag' => $matches[0],
-					] );
+					] , 'file-optimize' );
 					return;
 				}
 
@@ -221,7 +221,7 @@ class Combine extends Abstract_JS_Optimization {
 					Logger::debug( 'PCRE regex execution Catastrophic Backtracking', [
 						'inline JS backtracking error',
 						'content' => $matches_inline['content'],
-					] );
+					] , 'file-optimize' );
 					return;
 				}
 
@@ -229,7 +229,7 @@ class Combine extends Abstract_JS_Optimization {
 					Logger::debug( 'Inline script is not JS.', [
 						'js combine process',
 						'attributes' => $matches_inline['attrs'],
-					] );
+					] , 'file-optimize' );
 					return;
 				}
 
@@ -237,7 +237,7 @@ class Combine extends Abstract_JS_Optimization {
 					Logger::debug( 'Inline script has a `src` attribute.', [
 						'js combine process',
 						'attributes' => $matches_inline['attrs'],
-					] );
+					] , 'file-optimize' );
 					return;
 				}
 
@@ -247,7 +247,8 @@ class Combine extends Abstract_JS_Optimization {
 						[
 							'js combine process',
 							'excluded_content' => $matches_inline['content'],
-						]
+						] ,
+						'file-optimize'
 					);
 					return;
 				}
@@ -257,7 +258,7 @@ class Combine extends Abstract_JS_Optimization {
 						Logger::debug( 'Inline script has excluded content.', [
 							'js combine process',
 							'excluded_content' => $excluded_content,
-						] );
+						] , 'file-optimize' );
 						return;
 					}
 				}

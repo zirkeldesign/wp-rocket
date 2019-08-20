@@ -2,6 +2,7 @@
 namespace WP_Rocket\Admin;
 
 use WP_Rocket\Logger\Logger;
+use WP_Rocket\Admin\Options_Data;
 use WP_Rocket\Event_Management\Subscriber_Interface;
 
 defined( 'ABSPATH' ) || die( 'Cheatin&#8217; uh?' );
@@ -13,6 +14,26 @@ defined( 'ABSPATH' ) || die( 'Cheatin&#8217; uh?' );
  * @author Grégory Viguier
  */
 class Logs implements Subscriber_Interface {
+
+	/**
+	 * WP Rocket Options instance.
+	 *
+	 * @since  3.3.7
+	 * @access private
+	 * @author Soponar Cristina
+	 *
+	 * @var Options_Data
+	 */
+	private $options;
+
+	/**
+	 * Constructor
+	 *
+	 * @since  3.3.7
+	 */
+	public function __construct( Options_Data $options ) {
+		$this->options = $options;
+	}
 
 	/**
 	 * Returns an array of events that this subscriber wants to listen to.
@@ -74,7 +95,7 @@ class Logs implements Subscriber_Interface {
 	 * @author Grégory Viguier
 	 */
 	public function download_debug_file() {
-		if ( ! $this->verify_nonce( 'download_debug_file' ) ) {
+		if ( ! $this->verify_post_nonce( 'download_debug_file' ) ) {
 			wp_nonce_ays( '' );
 		}
 
@@ -82,7 +103,9 @@ class Logs implements Subscriber_Interface {
 			$this->redirect();
 		}
 
-		$contents = Logger::get_log_file_contents();
+		$section = $_POST['section'];
+
+		$contents = Logger::get_log_file_contents( $section );
 
 		if ( is_wp_error( $contents ) ) {
 			add_settings_error( 'general', $contents->get_error_code(), $contents->get_error_message(), 'error' );
@@ -91,7 +114,7 @@ class Logs implements Subscriber_Interface {
 			$this->redirect( add_query_arg( 'settings-updated', 1, wp_get_referer() ) );
 		}
 
-		$file_name = Logger::get_log_file_path();
+		$file_name = Logger::get_log_file_path( $section );
 		$file_name = basename( $file_name, '.log' ) . Logger::get_log_file_extension();
 
 		nocache_headers();
@@ -148,6 +171,20 @@ class Logs implements Subscriber_Interface {
 	 */
 	protected function verify_nonce( $nonce_name ) {
 		return isset( $_GET['_wpnonce'] ) && wp_verify_nonce( $_GET['_wpnonce'], $nonce_name );
+	}
+
+	/**
+	 * Verify the nonce sent in $_POST['_wpnonce'].
+	 *
+	 * @since  3.3.4
+	 * @access protected
+	 * @author Soponar Cristina
+	 *
+	 * @param  string $nonce_name The nonce name.
+	 * @return bool
+	 */
+	protected function verify_post_nonce( $nonce_name ) {
+		return isset( $_POST['_wpnonce'] ) && wp_verify_nonce( $_POST['_wpnonce'], $nonce_name );
 	}
 
 	/**

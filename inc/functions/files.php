@@ -47,13 +47,13 @@ function get_rocket_advanced_cache_file() {
 		}
 		return;
 	}
-	
+
 	$rocket_config_class = new \WP_Rocket\Buffer\Config(
 		[
 			\'config_dir_path\' => \'' . WP_ROCKET_CONFIG_PATH . '\',
 		]
 	);
-	
+
 	( new \WP_Rocket\Buffer\Cache(
 		new \WP_Rocket\Buffer\Tests(
 			$rocket_config_class

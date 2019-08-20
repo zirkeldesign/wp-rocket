@@ -51,20 +51,20 @@ class Combine extends Abstract_CSS_Optimization {
 	 * @return string
 	 */
 	public function optimize( $html ) {
-		Logger::info( 'CSS COMBINE PROCESS STARTED.', [ 'css combine process' ] );
+		Logger::debug( 'CSS COMBINE PROCESS STARTED.', [ 'css combine process' ] , 'file-optimize');
 
 		$html_nocomments = $this->hide_comments( $html );
 		$styles          = $this->find( '<link\s+([^>]+[\s\'"])?href\s*=\s*[\'"]\s*?([^\'"]+\.css(?:\?[^\'"]*)?)\s*?[\'"]([^>]+)?\/?>', $html_nocomments );
 
 		if ( ! $styles ) {
-			Logger::debug( 'No `<link>` tags found.', [ 'css combine process' ] );
+			Logger::debug( 'No `<link>` tags found.', [ 'css combine process' ] , 'file-optimize');
 			return $html;
 		}
 
 		Logger::debug( 'Found ' . count( $styles ) . ' `<link>` tag(s).', [
 			'css combine process',
 			'tags' => $styles,
-		] );
+		] , 'file-optimize');
 
 		$files  = [];
 		$styles = array_map( function( $style ) use ( &$files ) {
@@ -72,7 +72,7 @@ class Combine extends Abstract_CSS_Optimization {
 				Logger::debug( 'Style is external.', [
 					'css combine process',
 					'tag' => $style[0],
-				] );
+				] , 'file-optimize');
 				return;
 			}
 
@@ -80,7 +80,7 @@ class Combine extends Abstract_CSS_Optimization {
 				Logger::debug( 'Style is excluded.', [
 					'css combine process',
 					'tag' => $style[0],
-				] );
+				] , 'file-optimize');
 				return;
 			}
 
@@ -98,19 +98,19 @@ class Combine extends Abstract_CSS_Optimization {
 		$styles = array_filter( $styles );
 
 		if ( empty( $styles ) ) {
-			Logger::debug( 'No `<link>` tags to optimize.', [ 'css combine process' ] );
+			Logger::debug( 'No `<link>` tags to optimize.', [ 'css combine process' ] , 'file-optimize');
 			return $html;
 		}
 
 		Logger::debug( count( $styles ) . ' `<link>` tag(s) remaining.', [
 			'css combine process',
 			'tags' => $styles,
-		] );
+		] , 'file-optimize');
 
 		$minify_url = $this->combine( $files );
 
 		if ( ! $minify_url ) {
-			Logger::error( 'CSS combine process failed.', [ 'css combine process' ] );
+			Logger::error( 'CSS combine process failed.', [ 'css combine process' ] , 'file-optimize');
 			return $html;
 		}
 
@@ -119,7 +119,7 @@ class Combine extends Abstract_CSS_Optimization {
 		Logger::info( 'Combined CSS file successfully added.', [
 			'css combine process',
 			'url' => $minify_url,
-		] );
+		] , 'file-optimize');
 
 		return $html;
 	}
@@ -174,7 +174,7 @@ class Combine extends Abstract_CSS_Optimization {
 				Logger::error( 'No minified content.', [
 					'css combine process',
 					'path' => $minified_file,
-				] );
+				] , 'file-optimize');
 				return false;
 			}
 
@@ -184,19 +184,19 @@ class Combine extends Abstract_CSS_Optimization {
 				Logger::error( 'Minified CSS file could not be created.', [
 					'css combine process',
 					'path' => $minified_file,
-				] );
+				] , 'file-optimize');
 				return false;
 			}
 
 			Logger::debug( 'Combined CSS file successfully created.', [
 				'css combine process',
 				'path' => $minified_file,
-			] );
+			] , 'file-optimize');
 		} else {
 			Logger::debug( 'Combined CSS file already exists.', [
 				'css combine process',
 				'path' => $minified_file,
-			] );
+			] , 'file-optimize');
 		}
 
 		return $this->get_minify_url( $filename );
