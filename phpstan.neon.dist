@@ -15,18 +15,17 @@ parameters:
         # Must be first
         - %currentWorkingDirectory%/inc/functions/options.php
         # Procedural code
+        - %currentWorkingDirectory%/inc/constants.php
         - %currentWorkingDirectory%/inc/3rd-party/plugins/autoptimize.php
         - %currentWorkingDirectory%/inc/admin/ui/notices.php
         - %currentWorkingDirectory%/inc/functions/admin.php
         - %currentWorkingDirectory%/inc/functions/api.php
-        - %currentWorkingDirectory%/inc/functions/cloudflare.php
         - %currentWorkingDirectory%/inc/functions/files.php
         - %currentWorkingDirectory%/inc/functions/formatting.php
         - %currentWorkingDirectory%/inc/functions/htaccess.php
         - %currentWorkingDirectory%/inc/functions/i18n.php
         - %currentWorkingDirectory%/inc/functions/posts.php
         - %currentWorkingDirectory%/inc/functions/preload.php
-        - %currentWorkingDirectory%/inc/functions/varnish.php
         # Composer autoloader "exclude-from-classmap"
         - %currentWorkingDirectory%/inc/classes/class-wp-rocket-requirements-check.php
         - %currentWorkingDirectory%/inc/vendors/classes/class-rocket-mobile-detect.php
@@ -34,6 +33,7 @@ parameters:
          - %currentWorkingDirectory%/inc/vendors/
          # These need plugin stubs!
          - %currentWorkingDirectory%/inc/classes/subscriber/third-party/
+         - %currentWorkingDirectory%/inc/3rd-party/
     ignoreErrors:
         # Uses func_get_args()
         - '#^Function apply_filters(_ref_array)? invoked with [34567] parameters, 2 required\.$#'
