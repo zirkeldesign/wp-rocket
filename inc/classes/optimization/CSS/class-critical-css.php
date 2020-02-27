@@ -1,8 +1,6 @@
 <?php
 namespace WP_Rocket\Optimization\CSS;
 
-defined( 'ABSPATH' ) || exit;
-
 /**
  * Handles the critical CSS generation process.
  *
@@ -314,7 +312,7 @@ class Critical_CSS {
 		 * @since 2.11.4
 		 * @author Remy Perona
 		 *
-		 * @param Array $this->items Array containing the type/url pair for each item to send.
+		 * @param Array $items Array containing the type/url pair for each item to send.
 		 */
 		$this->items = apply_filters( 'rocket_cpcss_items', $this->items );
 	}
