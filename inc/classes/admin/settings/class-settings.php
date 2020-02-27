@@ -1,9 +1,8 @@
 <?php
 namespace WP_Rocket\Admin\Settings;
 
-use \WP_Rocket\Subscriber\Third_Party\Plugins\Security\Sucuri_Subscriber;
-
-defined( 'ABSPATH' ) || exit;
+use WP_Rocket\Admin\Options_Data;
+use WP_Rocket\Subscriber\Third_Party\Plugins\Security\Sucuri_Subscriber;
 
 /**
  * Settings class
@@ -15,7 +14,7 @@ class Settings {
 	 * @since 3.0
 	 * @author Remy Perona
 	 *
-	 * @var Array
+	 * @var Options_Data
 	 */
 	private $options;
 
@@ -45,9 +44,9 @@ class Settings {
 	 * @since 3.0
 	 * @author Remy Perona
 	 *
-	 * @param Array $options Array containg the option data.
+	 * @param Options_Data $options Instance of the Options_Data class.
 	 */
-	public function __construct( $options ) {
+	public function __construct( Options_Data $options ) {
 		$this->options = $options;
 	}
 
