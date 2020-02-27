@@ -108,7 +108,7 @@ class APIClient {
 	 * @since 3.5
 	 * @author Remy Perona
 	 *
-	 * @return array
+	 * @return array|WP_Error
 	 */
 	public function get_pricing_data() {
 		$pricing = get_transient( 'rocketcdn_pricing' );
