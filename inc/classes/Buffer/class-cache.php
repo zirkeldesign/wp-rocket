@@ -1,8 +1,6 @@
 <?php
 namespace WP_Rocket\Buffer;
 
-defined( 'ABSPATH' ) || exit;
-
 /**
  * Handle page cache.
  *
@@ -455,7 +453,7 @@ class Cache extends Abstract_Buffer {
 	 * @param int $time UNIX timestamp when the cache file was saved.
 	 * @return string The footprint that will be printed
 	 */
-	private function get_rocket_footprint( $time = '' ) {
+	private function get_rocket_footprint( $time = 0 ) {
 		$footprint = defined( 'WP_ROCKET_WHITE_LABEL_FOOTPRINT' ) ?
 						"\n" . '<!-- Cached for great performance' :
 						"\n" . '<!-- This website is like a Rocket, isn\'t it? Performance optimized by ' . WP_ROCKET_PLUGIN_NAME . '. Learn more: https://wp-rocket.me';
@@ -547,13 +545,11 @@ class Cache extends Abstract_Buffer {
 			$host = str_replace( '.', '_', $host );
 		}
 
-		$request_uri              = $this->tests->get_clean_request_uri();
-		$cookie_hash              = $this->config->get_config( 'cookie_hash' );
-		$logged_in_cookie         = $this->config->get_config( 'logged_in_cookie' );
-		$logged_in_cookie_no_hash = str_replace( $cookie_hash, '', $logged_in_cookie );
+		$request_uri      = $this->tests->get_clean_request_uri();
+		$logged_in_cookie = $this->config->get_config( 'logged_in_cookie' );
 
 		// Get cache folder of host name.
-		if ( $logged_in_cookie && isset( $cookies[ $logged_in_cookie ] ) && ! $this->tests->has_rejected_cookie( $logged_in_cookie_no_hash ) ) {
+		if ( $logged_in_cookie && isset( $cookies[ $logged_in_cookie ] ) && ! $this->tests->has_rejected_cookie() ) {
 			if ( $this->config->get_config( 'common_cache_logged_users' ) ) {
 				return $this->cache_dir_path . $host . '-loggedin' . rtrim( $request_uri, '/' );
 			}
