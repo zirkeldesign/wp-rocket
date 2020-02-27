@@ -212,7 +212,7 @@ class Google_Analytics extends Abstract_Busting {
 	 *
 	 * @param string $pattern Pattern to match.
 	 * @param string $html    HTML content.
-	 * @return string
+	 * @return bool|string
 	 */
 	protected function find( $pattern, $html ) {
 		\preg_match_all( '/' . $pattern . '/Umsi', $html, $matches, PREG_SET_ORDER );
