@@ -110,7 +110,7 @@ trait File_Busting {
 	 * @access private
 	 * @author Grégory Viguier
 	 *
-	 * @return bool|bool A list of file names (as array keys) and versions (as array values). False on failure.
+	 * @return bool|array A list of file names (as array keys) and versions (as array values). False on failure.
 	 */
 	private function get_all_files() {
 		$dir_path = \rtrim( $this->busting_path, '\\/' );
