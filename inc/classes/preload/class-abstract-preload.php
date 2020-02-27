@@ -8,6 +8,15 @@ namespace WP_Rocket\Preload;
  * @author Remy Perona
  */
 abstract class Abstract_Preload {
+	/**
+	 * An ID used in the "running" transient’s name.
+	 *
+	 * @since  3.5
+	 * @author Grégory Viguier
+	 *
+	 * @var string
+	 */
+	const PRELOAD_ID = '';
 
 	/**
 	 * Suffix used to identify "mobile items" to preload.
