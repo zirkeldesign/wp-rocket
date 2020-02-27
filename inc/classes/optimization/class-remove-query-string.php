@@ -227,7 +227,7 @@ class Remove_Query_String extends Abstract_Optimization {
 	 * @author Remy Perona
 	 *
 	 * @param string $url source URL.
-	 * @return bool\string
+	 * @return bool|string
 	 */
 	protected function can_replace( $url ) {
 		$parsed_url = get_rocket_parse_url( $url );
