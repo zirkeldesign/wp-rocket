@@ -148,7 +148,7 @@ abstract class Process extends WP_Background_Process {
 	 *     @type bool   $mobile True when we want to send a "mobile" user agent with the request.
 	 *     @type string $source An identifier related to the source of the preload.
 	 * }
-	 * @return array|WP_Error An array on success. A WP_Error object on failure.
+	 * @return array|\WP_Error An array on success. A WP_Error object on failure.
 	 */
 	private function preload( array $item ) {
 		/**
