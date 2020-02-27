@@ -182,7 +182,7 @@ class Config {
 	 * @access protected
 	 * @author Grégory Viguier
 	 *
-	 * @return string|bool The path to the file. False if no file is found.
+	 * @return array The path to the file. False if no file is found.
 	 */
 	public function get_config_file_path() {
 		if ( self::is_memoized( __FUNCTION__ ) ) {
