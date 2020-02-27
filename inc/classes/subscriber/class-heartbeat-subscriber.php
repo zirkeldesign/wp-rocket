@@ -131,7 +131,7 @@ class Heartbeat_Subscriber implements Subscriber_Interface {
 		 * @since  3.2
 		 * @author Grégory Viguier
 		 *
-		 * @param $context string Either 'site' (frontend), 'admin' (backend), or 'editor'.
+		 * @param string $context Either 'site' (frontend), 'admin' (backend), or 'editor'.
 		 */
 		$filtered_context = apply_filters( 'rocket_heartbeat_context', $context );
 
