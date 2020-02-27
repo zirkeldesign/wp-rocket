@@ -1,8 +1,6 @@
 <?php
 namespace WP_Rocket\Admin\Database;
 
-defined( 'ABSPATH' ) || exit;
-
 /**
  * Extends the background process class for the database optimization background process.
  *
@@ -40,7 +38,7 @@ class Optimization_Process extends \WP_Background_Process {
 	 * Dispatch
 	 *
 	 * @access public
-	 * @return array|WP_Error
+	 * @return array|\WP_Error
 	 */
 	public function dispatch() {
 		set_transient( 'rocket_database_optimization_process', 'running', HOUR_IN_SECONDS );
