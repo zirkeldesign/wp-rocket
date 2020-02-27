@@ -1114,7 +1114,7 @@ class Facebook_Pickles {
 	 * @param  string $file_url  URL to the remote file.
 	 * @return string|bool       The contents on success, false on failure.
 	 */
-	private function get_file_contents( $file_path, $file_url = false ) {
+	private function get_file_contents( $file_path, $file_url = '' ) {
 		$filesystem = \rocket_direct_filesystem();
 
 		if ( $filesystem->is_writable( $file_path ) ) {
