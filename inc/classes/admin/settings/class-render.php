@@ -3,8 +3,6 @@ namespace WP_Rocket\Admin\Settings;
 
 use WP_Rocket\Abstract_Render;
 
-defined( 'ABSPATH' ) || exit;
-
 /**
  * Handle rendering of HTML content for the settings page.
  *
