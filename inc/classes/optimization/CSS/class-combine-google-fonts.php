@@ -117,7 +117,7 @@ class Combine_Google_Fonts extends Abstract_Optimization {
 			$url   = html_entity_decode( $match[2] );
 			$query = \rocket_extract_url_component( $url, PHP_URL_QUERY );
 
-			if ( ! isset( $query ) ) {
+			if ( ! $query ) {
 				return;
 			}
 
