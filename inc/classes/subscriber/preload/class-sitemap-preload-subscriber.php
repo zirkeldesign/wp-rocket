@@ -60,7 +60,7 @@ class Sitemap_Preload_Subscriber implements Subscriber_Interface {
 		 *
 		 * @since 2.8
 		 *
-		 * @param array Array of sitemaps URL
+		 * @param array $sitemaps Array of sitemaps URL
 		 */
 		$sitemaps = apply_filters( 'rocket_sitemap_preload_list', $this->options->get( 'sitemaps', false ) );
 		$sitemaps = array_flip( array_flip( $sitemaps ) );
