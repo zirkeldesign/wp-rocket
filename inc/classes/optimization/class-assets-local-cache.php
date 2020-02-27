@@ -86,7 +86,7 @@ class Assets_Local_Cache {
 		$content = wp_remote_retrieve_body( wp_remote_get( $url ) );
 
 		if ( ! $content ) {
-			return false;
+			return '';
 		}
 
 		return $content;
