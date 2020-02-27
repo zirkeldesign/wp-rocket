@@ -1,8 +1,6 @@
 <?php
 namespace WP_Rocket\Optimization\CSS;
 
-defined( 'ABSPATH' ) || exit;
-
 /**
  * Extends the background process class for the critical CSS generation process.
  *

@@ -9,8 +9,6 @@ use Monolog\Formatter\LineFormatter;
 use WP_Rocket\Logger\HTML_Formatter as HtmlFormatter;
 use WP_Rocket\Logger\Stream_Handler as StreamHandler;
 
-defined( 'ABSPATH' ) || exit;
-
 /**
  * Class used to log events.
  *

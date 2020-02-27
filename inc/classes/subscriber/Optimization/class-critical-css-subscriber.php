@@ -5,8 +5,6 @@ use WP_Rocket\Event_Management\Subscriber_Interface;
 use WP_Rocket\Optimization\CSS\Critical_CSS;
 use WP_Rocket\Admin\Options_Data;
 
-defined( 'ABSPATH' ) || exit;
-
 /**
  * Critical CSS Subscriber
  *
@@ -376,7 +374,7 @@ JS;
 	 */
 	public function insert_critical_css_buffer( $buffer ) {
 		if ( ( defined( 'DONOTROCKETOPTIMIZE' ) && DONOTROCKETOPTIMIZE ) || ( defined( 'DONOTASYNCCSS' ) && DONOTASYNCCSS ) ) {
-			return;
+			return $buffer;
 		}
 
 		if ( ! $this->options->get( 'async_css' ) ) {
@@ -421,7 +419,7 @@ JS;
 	 */
 	public function async_css( $buffer ) {
 		if ( ( defined( 'DONOTROCKETOPTIMIZE' ) && DONOTROCKETOPTIMIZE ) || ( defined( 'DONOTASYNCCSS' ) && DONOTASYNCCSS ) ) {
-			return;
+			return $buffer;
 		}
 
 		if ( ! $this->options->get( 'async_css' ) ) {
