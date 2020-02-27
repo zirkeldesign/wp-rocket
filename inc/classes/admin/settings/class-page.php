@@ -4,8 +4,6 @@ namespace WP_Rocket\Admin\Settings;
 use \WP_Rocket\Interfaces\Render_Interface;
 use WP_Rocket\Admin\Database\Optimization;
 
-defined( 'ABSPATH' ) || exit;
-
 /**
  * Registers the admin page and WP Rocket settings
  *
@@ -900,7 +898,7 @@ class Page {
 		 * @since  3.4.2
 		 * @author Soponar Cristina
 		 *
-		 * @param array Will return the array with all plugin names which should disable LazyLoad
+		 * @param array $rocket_maybe_disable_lazyload_plugins Will return the array with all plugin names which should disable LazyLoad
 		 */
 		$rocket_maybe_disable_lazyload_plugins = apply_filters( 'rocket_maybe_disable_lazyload_helper', $rocket_maybe_disable_lazyload_plugins );
 		$rocket_maybe_disable_lazyload_plugins = wp_sprintf_l( '%l', $rocket_maybe_disable_lazyload_plugins );
