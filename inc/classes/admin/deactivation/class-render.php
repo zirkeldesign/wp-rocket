@@ -3,8 +3,6 @@ namespace WP_Rocket\Admin\Deactivation;
 
 use WP_Rocket\Abstract_Render;
 
-defined( 'ABSPATH' ) || exit;
-
 /**
  * Handles rendering of deactivation intent form on plugins page
  *
