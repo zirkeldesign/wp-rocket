@@ -1,8 +1,6 @@
 <?php
 namespace WP_Rocket\Admin\Database;
 
-defined( 'ABSPATH' ) || exit;
-
 /**
  * Handles the database optimization process.
  *
