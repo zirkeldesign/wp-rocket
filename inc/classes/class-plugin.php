@@ -5,8 +5,6 @@ use League\Container\Container;
 use WP_Rocket\Event_Management\Event_Manager;
 use WP_Rocket\Admin\Options;
 
-defined( 'ABSPATH' ) || exit;
-
 /**
  * Assembly class
  */
