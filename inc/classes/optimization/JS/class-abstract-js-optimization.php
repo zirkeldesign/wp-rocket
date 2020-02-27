@@ -140,7 +140,7 @@ class Abstract_JS_Optimization extends Abstract_Optimization {
 	 * @since 3.1
 	 * @author Remy Perona
 	 *
-	 * @return bool\string
+	 * @return bool|string
 	 */
 	protected function get_jquery_url() {
 		global $wp_scripts;
