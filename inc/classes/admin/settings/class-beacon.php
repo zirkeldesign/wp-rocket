@@ -49,7 +49,7 @@ class Beacon {
 	 * @since  3.2
 	 * @author Remy Perona
 	 *
-	 * @return string
+	 * @return string|void
 	 */
 	public function insert_script() {
 		if ( ! current_user_can( 'rocket_manage_options' ) ) {
