@@ -1,23 +1,17 @@
 <?php
 
-namespace WP_Rocket\Tests\Unit\Inc\Common;
+namespace WP_Rocket\Tests\Unit\inc\common;
 
 use Brain\Monkey\Functions;
-use WPMedia\PHPUnit\Unit\TestCase;
 
 /**
  * @covers ::rocket_clean_post_cache_on_slug_change
- * @group Common
+ * @uses   ::rocket_clean_files
+ *
+ * @group  Common
+ * @group  Purge
  */
-class TestRocketCleanPostCacheOnSlugChange extends TestCase {
-
-	protected function setUp() {
-		parent::setUp();
-
-		Functions\when( 'get_option' )->justReturn( '' );
-
-		require_once WP_ROCKET_PLUGIN_ROOT . 'inc/common/purge.php';
-	}
+class Test_RocketCleanPostCacheOnSlugChange extends TestCase {
 
 	public function testShouldBailOutWhenPostStatusIsNotCorrect() {
 		$post_id   = 10;

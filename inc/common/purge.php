@@ -9,23 +9,19 @@ add_action( 'update_option_sidebars_widgets', 'rocket_clean_domain' );  // When 
 add_action( 'update_option_category_base', 'rocket_clean_domain' );  // When category permalink is updated.
 add_action( 'update_option_tag_base', 'rocket_clean_domain' );  // When tag permalink is updated.
 add_action( 'permalink_structure_changed', 'rocket_clean_domain' );  // When permalink structure is update.
-add_action( 'create_term', 'rocket_clean_domain' );  // When a term is created.
-add_action( 'edited_terms', 'rocket_clean_domain' );  // When a term is updated.
-add_action( 'delete_term', 'rocket_clean_domain' );  // When a term is deleted.
 add_action( 'add_link', 'rocket_clean_domain' );  // When a link is added.
 add_action( 'edit_link', 'rocket_clean_domain' );  // When a link is updated.
 add_action( 'delete_link', 'rocket_clean_domain' );  // When a link is deleted.
 add_action( 'customize_save', 'rocket_clean_domain' );  // When customizer is saved.
 add_action( 'update_option_theme_mods_' . get_option( 'stylesheet' ), 'rocket_clean_domain' ); // When location of a menu is updated.
-add_action( 'upgrader_process_complete', 'rocket_clean_cache_theme_update', 10, 2 );  // When a theme is updated.
 
 /**
- * Purge cache When a widget is updated
+ * Purge cache When a widget is updated.
  *
  * @since 1.1.1
  *
  * @param object $instance Widget instance.
- * @return object Widget instance
+ * @return object Widget instance.
  */
 function rocket_widget_update_callback( $instance ) {
 	rocket_clean_domain();
@@ -462,6 +458,8 @@ function do_admin_post_rocket_purge_cache() { // phpcs:ignore WordPress.NamingCo
 				}
 
 				if ( get_rocket_option( 'manual_preload' ) && ( ! defined( 'WP_ROCKET_DEBUG' ) || ! WP_ROCKET_DEBUG ) ) {
+					$home_url = get_rocket_i18n_home_url( $lang );
+
 					/**
 					 * Filters the arguments for the preload request being triggered after clearing the cache.
 					 *
@@ -470,7 +468,7 @@ function do_admin_post_rocket_purge_cache() { // phpcs:ignore WordPress.NamingCo
 					 *
 					 * @param array $args Request arguments.
 					 */
-					$args = apply_filters(
+					$args = (array) apply_filters(
 						'rocket_preload_after_purge_cache_request_args',
 						[
 							'blocking'   => false,
@@ -479,10 +477,20 @@ function do_admin_post_rocket_purge_cache() { // phpcs:ignore WordPress.NamingCo
 							'sslverify'  => apply_filters( 'https_local_ssl_verify', false ), // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals
 						]
 					);
-					wp_safe_remote_get(
-						home_url( $lang ),
-						$args
-					);
+
+					wp_safe_remote_get( $home_url, $args );
+
+					/**
+					 * Fires after automatically preloading the homepage, which occurs after purging the cache.
+					 *
+					 * @since  3.5
+					 * @author Grégory Viguier
+					 *
+					 * @param string $home_url URL to the homepage being preloaded.
+					 * @param string $lang     The lang of the homepage.
+					 * @param array  $args     Arguments used for the preload request.
+					 */
+					do_action( 'rocket_after_preload_after_purge_cache', $home_url, $lang, $args );
 				}
 
 				rocket_dismiss_box( 'rocket_warning_plugin_modification' );
@@ -570,7 +578,7 @@ function do_admin_post_rocket_purge_opcache() { // phpcs:ignore WordPress.Naming
 add_action( 'admin_post_rocket_purge_opcache', 'do_admin_post_rocket_purge_opcache' );
 
 /**
- * Clean the cache when the current theme is updated
+ * Clean the cache when the current theme is updated.
  *
  * @param WP_Upgrader $wp_upgrader WP_Upgrader instance.
  * @param array       $hook_extra  Array of bulk item update data.
@@ -584,23 +592,24 @@ function rocket_clean_cache_theme_update( $wp_upgrader, $hook_extra ) {
 		return;
 	}
 
-	$current_theme = wp_get_theme();
-
-	$themes = [
-		$current_theme->get_template(), // Parent theme.
-		$current_theme->get_stylesheet(), // Child theme.
-	];
-
 	if ( ! is_array( $hook_extra['themes'] ) ) {
 		return;
 	}
 
-	if ( ! array_intersect( $hook_extra['themes'], $themes ) ) {
+	$current_theme = wp_get_theme();
+	$themes        = [
+		$current_theme->get_template(), // Parent theme.
+		$current_theme->get_stylesheet(), // Child theme.
+	];
+
+	// Bail out if the current theme or its parent is not updating.
+	if ( empty( array_intersect( $hook_extra['themes'], $themes ) ) ) {
 		return;
 	}
 
 	rocket_clean_domain();
 }
+add_action( 'upgrader_process_complete', 'rocket_clean_cache_theme_update', 10, 2 );  // When a theme is updated.
 
 /**
  * Purge WP Rocket cache on Slug / Permalink change.

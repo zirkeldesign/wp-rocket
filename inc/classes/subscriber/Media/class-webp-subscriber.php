@@ -3,9 +3,9 @@ namespace WP_Rocket\Subscriber\Media;
 
 use WP_Rocket\Admin\Options;
 use WP_Rocket\Admin\Options_Data;
-use WP_Rocket\Admin\Settings\Beacon;
-use WP_Rocket\Subscriber\CDN\CDNSubscriber;
+use WP_Rocket\Engine\Admin\Beacon\Beacon;
 use WP_Rocket\Event_Management\Subscriber_Interface;
+use WP_Rocket\Engine\CDN\Subscriber as CDNSubscriber;
 
 /**
  * Subscriber for the WebP support.
@@ -163,14 +163,14 @@ class Webp_Subscriber implements Subscriber_Interface {
 		$attribute_names = $this->get_attribute_names();
 
 		if ( ! $extensions || ! $attribute_names ) {
-			return $html;
+			return $html . '<!-- Rocket no webp -->';
 		}
 
 		$extensions      = implode( '|', $extensions );
 		$attribute_names = implode( '|', $attribute_names );
 
 		if ( ! preg_match_all( '@["\'\s](?<name>(?:data-(?:[a-z0-9_-]+-)?)?(?:' . $attribute_names . '))\s*=\s*["\']\s*(?<value>(?:https?:/)?/[^"\']+\.(?:' . $extensions . ')[^"\']*?)\s*["\']@is', $html, $attributes, PREG_SET_ORDER ) ) {
-			return $html;
+			return $html . '<!-- Rocket no webp -->';
 		}
 
 		if ( ! isset( $this->filesystem ) ) {
