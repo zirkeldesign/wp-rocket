@@ -103,7 +103,7 @@ class Render extends Abstract_render {
 	 * @since 3.0
 	 */
 	public function render_form_sections() {
-		if ( ! isset( $this->settings ) ) {
+		if ( empty( $this->settings ) ) {
 			return;
 		}
 
