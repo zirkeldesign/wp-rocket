@@ -5,22 +5,20 @@ namespace WP_Rocket\Engine\Admin\Deactivation;
 use WP_Rocket\Admin\Options;
 use WP_Rocket\Admin\Options_Data;
 use WP_Rocket\Event_Management\Subscriber_Interface;
-use WP_Rocket\Interfaces\Render_Interface;
+use WP_Rocket\Admin\Deactivation\Render;
 
 /**
  * Deactivation intent form on plugins page
  *
  * @since 3.0
- * @author Remy Perona
  */
 class DeactivationIntent implements Subscriber_Interface {
 	/**
-	 * Render Interface
+	 * Render instance
 	 *
 	 * @since 3.0
-	 * @author Remy Perona
 	 *
-	 * @var Render_Interface
+	 * @var Render
 	 */
 	private $render;
 
@@ -28,7 +26,6 @@ class DeactivationIntent implements Subscriber_Interface {
 	 * Options instance.
 	 *
 	 * @since 3.0
-	 * @author Remy Perona
 	 *
 	 * @var Options
 	 */
@@ -38,7 +35,6 @@ class DeactivationIntent implements Subscriber_Interface {
 	 * Options_Data instance.
 	 *
 	 * @since 3.0
-	 * @author Remy Perona
 	 *
 	 * @var Options_Data
 	 */
@@ -48,13 +44,12 @@ class DeactivationIntent implements Subscriber_Interface {
 	 * Constructor
 	 *
 	 * @since 3.0
-	 * @author Remy Perona
 	 *
-	 * @param Render_Interface $render      Render interface.
-	 * @param Options          $options_api Options instance.
-	 * @param Options_Data     $options     Options_Data instance.
+	 * @param Render       $render      Render instance.
+	 * @param Options      $options_api Options instance.
+	 * @param Options_Data $options     Options_Data instance.
 	 */
-	public function __construct( Render_Interface $render, Options $options_api, Options_Data $options ) {
+	public function __construct( Render $render, Options $options_api, Options_Data $options ) {
 		$this->render      = $render;
 		$this->options_api = $options_api;
 		$this->options     = $options;
@@ -64,7 +59,6 @@ class DeactivationIntent implements Subscriber_Interface {
 	 * Return an array of events that this subscriber wants to listen to.
 	 *
 	 * @since  3.0
-	 * @author Remy Perona
 	 *
 	 * @return array
 	 */
@@ -80,7 +74,6 @@ class DeactivationIntent implements Subscriber_Interface {
 	 * Inserts mixpanel tracking on plugins page to send deactivation data
 	 *
 	 * @since 3.0
-	 * @author Remy Perona
 	 *
 	 * @return void
 	 */
@@ -109,7 +102,6 @@ mixpanel.init("a36067b00a263cce0299cfd960e26ecf", {
 	 * Inserts the deactivation intent form on plugins page
 	 *
 	 * @since 3.0
-	 * @author Remy Perona
 	 *
 	 * @return void
 	 */
@@ -127,7 +119,6 @@ mixpanel.init("a36067b00a263cce0299cfd960e26ecf", {
 	 * Activates WP Rocket safe mode by deactivating possibly layout breaking options
 	 *
 	 * @since 3.0
-	 * @author Remy Perona
 	 *
 	 * @return void
 	 */
