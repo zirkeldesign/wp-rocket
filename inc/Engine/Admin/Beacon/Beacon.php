@@ -26,7 +26,7 @@ class Beacon extends Abstract_Render implements Subscriber_Interface {
 	 *
 	 * @since  3.2
 	 *
-	 * @var string $locale
+	 * @var string|null $locale
 	 */
 	private $locale;
 
