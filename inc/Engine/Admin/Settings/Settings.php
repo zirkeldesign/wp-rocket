@@ -43,7 +43,7 @@ class Settings {
 	 * @since 3.6
 	 * @see   $this->sanitize_font()
 	 *
-	 * @var string|bool
+	 * @var array
 	 */
 	private $font_formats = [
 		'otf',
@@ -59,7 +59,7 @@ class Settings {
 	 * @since 3.6
 	 * @see   $this->get_hosts()
 	 *
-	 * @var array
+	 * @var array|null
 	 */
 	private $hosts;
 
@@ -348,7 +348,11 @@ class Settings {
 
 		$input['automatic_cleanup_frequency'] = isset( $input['automatic_cleanup_frequency'], $cleanup_frequencies[ $input['automatic_cleanup_frequency'] ] ) ? $input['automatic_cleanup_frequency'] : $this->options->get( 'automatic_cleanup_frequency' );
 
-		if ( 1 !== $input['schedule_automatic_cleanup'] && ( 'daily' !== $input['automatic_cleanup_frequency'] || 'weekly' !== $input['automatic_cleanup_frequency'] || 'monthly' !== $input['automatic_cleanup_frequency'] ) ) {
+		if (
+			1 !== $input['schedule_automatic_cleanup']
+			&&
+			! in_array( $input['automatic_cleanup_frequency'], [ 'daily', 'weekly', 'monthly' ], true )
+		) {
 			$input['automatic_cleanup_frequency'] = $this->options->get( 'automatic_cleanup_frequency' );
 		}
 
