@@ -2,10 +2,6 @@
 
 defined( 'ABSPATH' ) || exit;
 
-if ( class_exists( 'WpeCommon' ) && function_exists( 'wpe_param' ) ) {
-	require WP_ROCKET_3RD_PARTY_PATH . 'hosting/wpengine.php';
-}
-
 if ( class_exists( 'FlywheelNginxCompat' ) ) {
 	require WP_ROCKET_3RD_PARTY_PATH . 'hosting/flywheel.php';
 }
@@ -83,13 +79,11 @@ require WP_ROCKET_3RD_PARTY_PATH . 'plugins/seo/the-seo-framework.php';
 require WP_ROCKET_3RD_PARTY_PATH . 'plugins/seo/all-in-one-seo-pack.php';
 require WP_ROCKET_3RD_PARTY_PATH . 'plugins/seo/premium-seo-pack.php';
 require WP_ROCKET_3RD_PARTY_PATH . 'plugins/wp-rest-api.php';
-require WP_ROCKET_3RD_PARTY_PATH . 'plugins/page-builder/beaver-builder.php';
 require WP_ROCKET_3RD_PARTY_PATH . 'plugins/page-builder/thrive-visual-editor.php';
 require WP_ROCKET_3RD_PARTY_PATH . 'plugins/page-builder/visual-composer.php';
 require WP_ROCKET_3RD_PARTY_PATH . 'plugins/security/secupress.php';
 require WP_ROCKET_3RD_PARTY_PATH . 'plugins/security/sf-move-login.php';
 require WP_ROCKET_3RD_PARTY_PATH . 'plugins/security/wps-hide-login.php';
-require WP_ROCKET_3RD_PARTY_PATH . 'plugins/simple-custom-css.php';
 require WP_ROCKET_3RD_PARTY_PATH . 'plugins/varnish-http-purge.php';
 require WP_ROCKET_3RD_PARTY_PATH . 'plugins/thrive-leads.php';
 require WP_ROCKET_3RD_PARTY_PATH . 'plugins/mailchimp.php';

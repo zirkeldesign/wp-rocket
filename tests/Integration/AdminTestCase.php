@@ -2,20 +2,27 @@
 
 namespace WP_Rocket\Tests\Integration;
 
-use WPMedia\PHPUnit\Integration\TestCase;
+use WP_Rocket\Tests\StubTrait;
+use WPMedia\PHPUnit\Integration\TestCase as BaseTestCase;
 
-abstract class AdminTestCase extends TestCase {
-	protected $error_lel;
+abstract class AdminTestCase extends BaseTestCase {
+	use StubTrait;
+
+	protected $error_level;
 	protected $user_id = 0;
 
 	public static function setUpBeforeClass() {
+		parent::setUpBeforeClass();
 		remove_action( 'admin_init', '_maybe_update_core' );
 		remove_action( 'admin_init', '_maybe_update_plugins' );
 		remove_action( 'admin_init', '_maybe_update_themes' );
+		remove_action( 'admin_init', array( 'WP_Privacy_Policy_Content', 'add_suggested_content' ), 1 );
 	}
 
 	public function setUp() {
 		parent::setUp();
+
+		$this->stubRocketGetConstant();
 
 		// Suppress warnings from "Cannot modify header information - headers already sent by".
 		$this->error_level = error_reporting();
@@ -27,9 +34,11 @@ abstract class AdminTestCase extends TestCase {
 		$_GET  = [];
 		unset( $GLOBALS['post'], $GLOBALS['comment'] );
 
+		$this->resetStubProperties();
+
 		parent::tearDown();
 
-		error_reporting( $this->_error_level );
+		error_reporting( $this->error_level );
 		set_current_screen( 'front' );
 		if ( $this->user_id > 0 ) {
 			wp_delete_user( $this->user_id );

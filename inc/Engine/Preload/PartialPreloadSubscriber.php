@@ -98,11 +98,8 @@ class PartialPreloadSubscriber implements Subscriber_Interface {
 		// Get the author page.
 		$purge_author = [ get_author_posts_url( $post->post_author ) ];
 
-		// Get all dates archive page.
-		$purge_dates = get_rocket_post_dates_urls( $post->ID );
-
-		// Remove dates archives page and author page to preload cache.
-		$purge_urls = array_diff( $purge_urls, $purge_dates, $purge_author );
+		// Remove author page from preload cache.
+		$purge_urls = array_diff( $purge_urls, $purge_author );
 
 		$purge_urls = array_filter( $purge_urls );
 
@@ -142,9 +139,11 @@ class PartialPreloadSubscriber implements Subscriber_Interface {
 				} else {
 					$file_path         = untrailingslashit( $file_path );
 					$data['home_path'] = untrailingslashit( $data['home_path'] );
+					$data['home_url']  = untrailingslashit( $data['home_url'] );
 					if ( '/' === substr( get_option( 'permalink_structure' ), -1 ) ) {
 						$file_path         .= '/';
 						$data['home_path'] .= '/';
+						$data['home_url']  .= '/';
 					}
 				}
 

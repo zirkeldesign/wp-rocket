@@ -15,6 +15,17 @@ define( 'WP_ROCKET_IS_TESTING', true );
 tests_add_filter(
 	'muplugins_loaded',
 	function() {
+		if ( BootstrapManager::isGroup( 'WithSCCSS' ) ) {
+			// Load Simple Custom CSS plugin.
+			require WP_ROCKET_PLUGIN_ROOT . '/vendor/wpackagist-plugin/simple-custom-css/simple-custom-css.php';
+			update_option(
+				'sccss_settings',
+				[
+					'sccss-content' => '.simple-custom-css { color: red; }',
+				]
+			);
+		}
+
 		if ( BootstrapManager::isGroup( 'WithAmp' ) ) {
 			// Load AMP plugin.
 			require WP_ROCKET_PLUGIN_ROOT . '/vendor/wpackagist-plugin/amp/amp.php';
@@ -48,8 +59,40 @@ tests_add_filter(
 			require WP_ROCKET_PLUGIN_ROOT . '/vendor/woocommerce/woocommerce/woocommerce.php';
 		}
 
+		if ( BootstrapManager::isGroup( 'BeaverBuilder' ) ) {
+			define( 'FL_BUILDER_VERSION', '5.3' );
+		}
+
+		if ( BootstrapManager::isGroup( 'Elementor' ) ) {
+			define( 'ELEMENTOR_VERSION', '2.0' );
+		}
+
+		if ( BootstrapManager::isGroup( 'Hummingbird' ) ) {
+			define( 'WP_ADMIN', true );
+			require WP_ROCKET_PLUGIN_ROOT . '/vendor/wpackagist-plugin/hummingbird-performance/wp-hummingbird.php';
+		}
+
 		if ( BootstrapManager::isGroup( 'Cloudways' ) ) {
 			$_SERVER['cw_allowed_ip'] = true;
+		}
+
+		if ( BootstrapManager::isGroup( 'SpinUpWP' ) ) {
+			putenv( 'SPINUPWP_CACHE_PATH=/wp-content/spinupwp-cache/' );
+			require WP_ROCKET_PLUGIN_ROOT . '/vendor/wpackagist-plugin/spinupwp/spinupwp.php';
+		}
+
+		if ( BootstrapManager::isGroup( 'PDFEmbedder' ) ) {
+			require WP_ROCKET_PLUGIN_ROOT . '/vendor/wpackagist-plugin/pdf-embedder/pdf_embedder.php';
+		}
+
+		if ( BootstrapManager::isGroup( 'PDFEmbedderPremium' ) ) {
+			require WP_ROCKET_PLUGIN_ROOT . '/vendor/wpackagist-plugin/pdf-embedder/core/core_pdf_embedder.php';
+			require WP_ROCKET_TESTS_FIXTURES_DIR . '/inc/ThirdParty/Plugins/PDFEmbedder/mobile_pdf_embedder.php';
+		}
+
+		if ( BootstrapManager::isGroup( 'PDFEmbedderSecure' ) ) {
+			require WP_ROCKET_PLUGIN_ROOT . '/vendor/wpackagist-plugin/pdf-embedder/core/core_pdf_embedder.php';
+			require WP_ROCKET_TESTS_FIXTURES_DIR . '/inc/ThirdParty/Plugins/PDFEmbedder/secure_pdf_embedder.php';
 		}
 
 		// Overload the license key for testing.
@@ -57,6 +100,14 @@ tests_add_filter(
 
 		if ( BootstrapManager::isGroup( 'DoCloudflare' ) ) {
 			update_option( 'wp_rocket_settings', [ 'do_cloudflare' => 1 ] );
+		}
+
+		if ( BootstrapManager::isGroup( 'WPEngine' ) ) {
+			define( 'WP_ADMIN', true );
+			define( 'PWP_NAME', 'PWP_NAME' );
+			// Load WP Engine mocked files.
+			require WP_ROCKET_TESTS_FIXTURES_DIR . '/inc/ThirdParty/Hostings/WPEngine/wpe_param.php';
+			require WP_ROCKET_TESTS_FIXTURES_DIR . '/inc/ThirdParty/Hostings/WPEngine/WpeCommon.php';
 		}
 
 		// Load the plugin.
