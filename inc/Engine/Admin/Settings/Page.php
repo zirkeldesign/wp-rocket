@@ -3,7 +3,7 @@ namespace WP_Rocket\Engine\Admin\Settings;
 
 use WP_Rocket\Admin\Database\Optimization;
 use WP_Rocket\Engine\Admin\Beacon\Beacon;
-use WP_Rocket\Interfaces\Render_Interface;
+use WP_Rocket\Engine\Admin\Settings\Render;
 
 /**
  * Registers the admin page and WP Rocket settings.
@@ -49,11 +49,11 @@ class Page {
 	private $settings;
 
 	/**
-	 * Render implementation.
+	 * Render instance.
 	 *
 	 * @since 3.0
 	 *
-	 * @var Render_Interface
+	 * @var Render
 	 */
 	private $render;
 
@@ -80,13 +80,13 @@ class Page {
 	 *
 	 * @since 3.0
 	 *
-	 * @param array            $args     Array of required arguments to add the admin page.
-	 * @param Settings         $settings Instance of Settings class.
-	 * @param Render_Interface $render   Implementation of Render interface.
-	 * @param Beacon           $beacon   Beacon instance.
-	 * @param Optimization     $optimize Database optimization instance.
+	 * @param array        $args     Array of required arguments to add the admin page.
+	 * @param Settings     $settings Instance of Settings class.
+	 * @param Render       $render   Render instance.
+	 * @param Beacon       $beacon   Beacon instance.
+	 * @param Optimization $optimize Database optimization instance.
 	 */
-	public function __construct( $args, Settings $settings, Render_Interface $render, Beacon $beacon, Optimization $optimize ) {
+	public function __construct( $args, Settings $settings, Render $render, Beacon $beacon, Optimization $optimize ) {
 		$this->slug       = $args['slug'];
 		$this->title      = $args['title'];
 		$this->capability = $args['capability'];
