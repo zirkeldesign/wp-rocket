@@ -224,7 +224,7 @@ class APIClient {
 				'message' => sprintf(
 					// translators: %s = message returned by the API.
 					__( 'RocketCDN cache purge failed: %s.', 'rocket' ),
-					$data->message
+					isset( $data->message ) ? $data->message : ''
 				),
 			];
 		}
