@@ -4,8 +4,9 @@ namespace WP_Rocket\Engine\Cache;
 
 use DirectoryIterator;
 use Exception;
-use WP_Term;
+use WP_Filesystem_Direct;
 use WP_Post;
+use WP_Term;
 
 /**
  * Cache Purge handling class

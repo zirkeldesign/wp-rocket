@@ -2,6 +2,8 @@
 
 namespace WP_Rocket\Engine\Cache;
 
+use WP_Filesystem_Direct;
+
 class WPCache {
 	/**
 	 * Filesystem instance.

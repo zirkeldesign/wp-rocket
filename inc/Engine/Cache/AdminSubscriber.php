@@ -4,6 +4,7 @@ namespace WP_Rocket\Engine\Cache;
 
 use WP_Rocket\Event_Management\Event_Manager;
 use WP_Rocket\Event_Management\Event_Manager_Aware_Subscriber_Interface;
+use WP_Term;
 
 /**
  * Subscriber for the cache admin events

@@ -3,6 +3,7 @@ namespace WP_Rocket\Engine\Cache;
 
 use WP_Rocket\Event_Management\Subscriber_Interface;
 use WP_Rocket\Admin\Options_Data;
+use WP_Post;
 
 /**
  * Subscriber for the cache purge actions
