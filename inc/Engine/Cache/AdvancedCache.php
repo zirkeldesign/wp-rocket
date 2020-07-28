@@ -18,7 +18,7 @@ class AdvancedCache {
 	 *
 	 * @var string
 	 */
-	private $content_dir;
+	private $content_dir = '';
 
 	/**
 	 * Instance of the filesystem handler.
@@ -35,7 +35,7 @@ class AdvancedCache {
 	 */
 	public function __construct( $template_path, $filesystem ) {
 		$this->template_path = $template_path;
-		$this->content_dir   = rocket_get_constant( 'WP_CONTENT_DIR' );
+		$this->content_dir   = rocket_get_constant( 'WP_CONTENT_DIR', '' );
 		$this->filesystem    = $filesystem;
 	}
 
