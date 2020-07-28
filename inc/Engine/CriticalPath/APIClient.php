@@ -52,7 +52,7 @@ class APIClient {
 	 * @param bool           $is_mobile Optional. Flag for if this is cpcss for mobile or not. Default: false.
 	 * @param string         $item_type Optional. Type for this item if it's custom or specific type. Default: custom.
 	 *
-	 * @return array|WP_Error
+	 * @return array|object|WP_Error
 	 */
 	private function prepare_response( $response, $url, $is_mobile = false, $item_type = 'custom' ) {
 

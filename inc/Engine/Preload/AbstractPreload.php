@@ -43,7 +43,7 @@ abstract class AbstractPreload {
 	 * @since  3.5
 	 * @author Grégory Viguier
 	 *
-	 * @var array
+	 * @var array|null
 	 */
 	protected $cache_query_strings;
 

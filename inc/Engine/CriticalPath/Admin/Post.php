@@ -31,7 +31,7 @@ class Post extends Abstract_Render {
 	/**
 	 * Array of reasons to disable actions.
 	 *
-	 * @var array
+	 * @var array|null
 	 */
 	private $disabled_data;
 

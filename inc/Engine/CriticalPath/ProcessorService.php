@@ -76,7 +76,7 @@ class ProcessorService {
 	 * @param bool   $is_mobile If this request is for mobile cpcss.
 	 * @param string $item_type Optional. Type for this item if it's custom or specific type. Default: custom.
 	 *
-	 * @return array
+	 * @return array|object|WP_Error
 	 */
 	private function send_generation_request( $item_url, $item_path, $is_mobile = false, $item_type = 'custom' ) {
 		// call send generation request from APIClient for the first time.
