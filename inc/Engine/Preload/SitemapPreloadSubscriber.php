@@ -12,6 +12,19 @@ use WP_Rocket\Event_Management\Subscriber_Interface;
  * @author Remy Perona
  */
 class SitemapPreloadSubscriber implements Subscriber_Interface {
+	/**
+	 * WP Rocket options instance.
+	 *
+	 * @var Options_Data
+	 */
+	private $options;
+
+	/**
+	 * Sitemap preload instance
+	 *
+	 * @var Sitemap
+	 */
+	private $sitemap_preload;
 
 	/**
 	 * Constructor
