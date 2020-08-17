@@ -1026,7 +1026,7 @@ class Page {
 						'disabled' => ! empty( $disable_youtube_lazyload ) ? 1 : 0,
 					],
 					// translators: %1$s = “WP Rocket”, %2$s = a list of plugin or themes names.
-					'description'       => ! empty( $disable_youtube_lazyload ) ? sprintf( __( 'Replace YouTube iframe with preview image is not compatible with %2$s.', 'rocket' ), WP_ROCKET_PLUGIN_NAME, $disable_youtube_lazyload ) : '',
+					'helper'            => ! empty( $disable_youtube_lazyload ) ? sprintf( __( 'Replace YouTube iframe with preview image is not compatible with %2$s.', 'rocket' ), WP_ROCKET_PLUGIN_NAME, $disable_youtube_lazyload ) : '',
 				],
 				'emoji'            => [
 					'type'              => 'checkbox',
