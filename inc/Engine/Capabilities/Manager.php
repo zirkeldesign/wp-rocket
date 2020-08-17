@@ -2,6 +2,7 @@
 
 namespace WP_Rocket\Engine\Capabilities;
 
+use WP_Role;
 use WP_Rocket\Engine\Activation\ActivationInterface;
 use WP_Rocket\Engine\Deactivation\DeactivationInterface;
 
