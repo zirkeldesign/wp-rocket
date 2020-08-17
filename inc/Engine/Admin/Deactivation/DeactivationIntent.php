@@ -25,8 +25,6 @@ class DeactivationIntent implements Subscriber_Interface {
 	/**
 	 * Options instance.
 	 *
-	 * @since 3.0
-	 *
 	 * @var Options
 	 */
 	private $options_api;
@@ -130,21 +128,30 @@ mixpanel.init("a36067b00a263cce0299cfd960e26ecf", {
 			return;
 		}
 
-		$reset_options = [
-			'embeds'                 => 0,
-			'defer_all_js'           => 0,
-			'async_css'              => 0,
-			'lazyload'               => 0,
-			'lazyload_iframes'       => 0,
-			'lazyload_youtube'       => 0,
-			'minify_css'             => 0,
-			'minify_concatenate_css' => 0,
-			'minify_js'              => 0,
-			'minify_concatenate_js'  => 0,
-			'minify_html'            => 0,
-			'minify_google_fonts'    => 0,
-			'cdn'                    => 0,
-		];
+		/**
+		 * Filters the array of options to reset when activating safe mode
+		 *
+		 * @since 3.7
+		 *
+		 * @param array $options Array of options to reset.
+		 */
+		$reset_options = apply_filters(
+			'rocket_safe_mode_reset_options',
+			[
+				'embeds'                 => 0,
+				'defer_all_js'           => 0,
+				'async_css'              => 0,
+				'lazyload'               => 0,
+				'lazyload_iframes'       => 0,
+				'lazyload_youtube'       => 0,
+				'minify_css'             => 0,
+				'minify_concatenate_css' => 0,
+				'minify_js'              => 0,
+				'minify_concatenate_js'  => 0,
+				'minify_google_fonts'    => 0,
+				'cdn'                    => 0,
+			]
+		);
 
 		$this->options->set_values( $reset_options );
 		$this->options_api->set( 'settings', $this->options->get_options() );
