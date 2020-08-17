@@ -14,9 +14,9 @@ parameters:
         - %currentWorkingDirectory%/inc/functions/options.php
         # Procedural code
         - %currentWorkingDirectory%/inc/constants.php
+        - %currentWorkingDirectory%/inc/API/bypass.php
         - %currentWorkingDirectory%/inc/3rd-party/plugins/autoptimize.php
         - %currentWorkingDirectory%/inc/admin/ui/notices.php
-        - %currentWorkingDirectory%/inc/constants.php
         - %currentWorkingDirectory%/inc/functions/admin.php
         - %currentWorkingDirectory%/inc/functions/api.php
         - %currentWorkingDirectory%/inc/functions/files.php
